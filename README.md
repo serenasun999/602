@@ -1,5 +1,5 @@
 # 601 Project - Working with Data and Visualization - "Analysis of Calgary’s Historical Air Quality Data"
-The project is a detailed study examining air quality changes over 39 years in Calgary due to anthropogenic factors, particularly greenhouse gas emissions. It leverages data from Alberta Environment and Parks and the World Health Organization to compare local and global trends. Here are the key points for a summary:
+The project is a detailed study examining air quality changes over 39 years in Calgary due to anthropogenic factors, particularly greenhouse gas emissions. It leverages data from Alberta Environment and Parks and the World Health Organization to compare local and global trends.
 
 1. **Objective and Data Sources**: The project aims to understand the variability in greenhouse gas emissions over nearly four decades in Calgary. It uses two primary datasets: 'Historical Air Quality' from the Calgary Region Airshed Zone and 'Global Data Trends' from the WHO.
 
@@ -25,6 +25,20 @@ The project underscores Calgary's progress in air quality management compared to
 # 602 Project - Statistical Data Analysis
 ### Focus of statistical investigation
 The focus of our statistical investigation is to understand if there is any statistical difference between the particulate matter recorded in Calgary vs particulate matter recorded globally in order to gain evidence to support or reject our hypothesis that PM2.5 globally is equal to PM2.5 in Calgary. We also want to determine how greenhouse gas emissions changed over the years in Calgary by plotting the distribution of greenhouse gas emissions over the years and estimating the population average via bootstrapping. This data is leveraged by the Government of Alberta to visualize, analyze and continually monitor air pollution. This enables Calgary residents to protect themselves and take the necessary precautions especially those who are health compromised. 
+
+1. **Objective**: To understand how Calgary's air quality has changed over the years and how it compares to global data, with a specific look at particulate matter (PM2.5) and greenhouse gases in relation to Calgary's population growth.
+
+2. **Data Sources and Methodology**: Utilizing the "Historical Air Quality" dataset and WHO Air Quality Database, the team applied statistical methods such as hypothesis testing, permutation tests, and linear regression analysis.
+
+3. **Key Findings**:
+   - There is a statistically significant difference between PM2.5 levels in Calgary and the global average, with Calgary's levels being different from the world's.
+   - No significant difference was found in the Air Quality Index between central and non-central areas of Calgary, challenging the assumption that central areas would have higher pollution levels.
+   - A strong negative correlation was identified between population growth and levels of Nitrogen Dioxide (NO2) and Nitric Oxide (NO), contrary to expectations of increased emissions with population growth.
+
+4. **Conclusions**: The study concluded that Calgary's PM2.5 levels are distinct from global levels and that central Calgary does not necessarily have poorer air quality compared to other areas. Additionally, despite population growth, some greenhouse gas emissions have decreased due to improved technology and environmental awareness.
+
+5. **Next Steps**: It is suggested to analyze other parameters from the primary dataset and to use the established models for predictive analysis regarding the impact of population growth on air quality.
+   
 
 # 603 Project - Statistical Modelling with Data
 In our research for this project, we discovered that many different factors contribute to an individual’s success in terms of their education. The goal of this project is to explore these factors, and analyze how each factor negatively, or positively impacts an individual’s success in the education system in order to be able to make informed decisions on the overall quality of education these students are receiving, as well as predict school achievement success.
