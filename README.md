@@ -22,7 +22,7 @@ The project is a detailed study examining air quality changes over 39 years in C
 The project underscores Calgary's progress in air quality management compared to global trends but also emphasizes the need for ongoing efforts to address the rise in certain greenhouse gases.
 
 
-# 602 Project - Statistical Data Analysis
+# 602 Project - Statistical Data Analysis - "Historical Air Quality Analysis"
 ### Focus of statistical investigation
 The focus of our statistical investigation is to understand if there is any statistical difference between the particulate matter recorded in Calgary vs particulate matter recorded globally in order to gain evidence to support or reject our hypothesis that PM2.5 globally is equal to PM2.5 in Calgary. We also want to determine how greenhouse gas emissions changed over the years in Calgary by plotting the distribution of greenhouse gas emissions over the years and estimating the population average via bootstrapping. This data is leveraged by the Government of Alberta to visualize, analyze and continually monitor air pollution. This enables Calgary residents to protect themselves and take the necessary precautions especially those who are health compromised. 
 
@@ -40,8 +40,15 @@ The focus of our statistical investigation is to understand if there is any stat
 5. **Next Steps**: It is suggested to analyze other parameters from the primary dataset and to use the established models for predictive analysis regarding the impact of population growth on air quality.
    
 
-# 603 Project - Statistical Modelling with Data
-In our research for this project, we discovered that many different factors contribute to an individual’s success in terms of their education. The goal of this project is to explore these factors, and analyze how each factor negatively, or positively impacts an individual’s success in the education system in order to be able to make informed decisions on the overall quality of education these students are receiving, as well as predict school achievement success.
+# 603 Project - Statistical Modelling with Data - "Multiple Regression Analysis: Prediction of Average Overall Achievement Score of schools in North Carolina"
+1. **Objective**: In our research for this project, we discovered that many different factors contribute to an individual’s success in terms of their education. The goal of this project is to explore these factors and analyze how each factor negatively, or positively impacts an individual’s success in the education system to be able to make informed decisions on the overall quality of education these students are receiving, as well as predicting school achievement success.
+
+2. **Data Sources and Methodology**: Utilizing the open source dataset “School Report Cards (SRC)” which was taken from: the North Carolina Department of Public Instruction. All datasets have a key column “agency_code” which includes various information regarding school and staff performance together with aggregated scores for each school in every subject (Math, English and etc.) for each year. 15 independent variables were narrowed down via stepwise regression for feature selection. Multiple regression analysis was applied to the dataset. The methodology involved checking for multicollinearity, individual t-tests, and stepwise regression to finalize the model.
+
+3. **Key Findings and Conclusions**:
+    - The results indicated that factors like school development, staff performance, and financial assets were significant. The final model incorporated interaction terms and was validated against regression assumptions. The main challenge was homoscedasticity, which was addressed using transformations like Box-Cox. The model's adjusted R-squared value was 61.64%, reflecting the unpredictability of human-related data.
+  
+4. **Next Steps**:The study suggests future research could focus on individual student-level data to refine predictions.
 
 # 604 Project - Working with Data at Scale
 For our project, we will be examining the relationships between air quality and neighbourhood poverty, and seeing what effect this has on cancer rates and incidents of asthma in New York City. In our research for this project, we discovered that lung cancer is strongly correlated to air pollution, and chose to investigate that along with 3 other types of cancer that we think will also be affected and that we found interesting. The cancers that we will be investigating are: Lung cancer, Larynx cancer, Esophageal cancer, and Non-Hodgkins Lymphoma.
