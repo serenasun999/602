@@ -1,0 +1,332 @@
+---
+title: "Final Project Statistical Analysis"
+author: "Group 2"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r, warning=FALSE, message=FALSE, include=FALSE}
+library(dplyr)
+library(skimr)
+library(tidyverse)
+library(MASS)
+#library(vcdExtra)
+library(lmtest)
+library(brant)
+library(car)
+library(ggplot2)
+```
+
+# Data cleaning
+
+```{r}
+# Load data
+data_full = read.csv('cleveland_data.csv')
+data_full
+```
+
+```{r}
+# Add new column for binary outcome
+data_full = data_full %>%
+  mutate(heartdisease_binary = case_when(
+    heartdisease == 0 ~ 0,
+    heartdisease >= 1 ~ 1
+  ))
+
+# Add new column for thalassemia 
+data_full = data_full %>%
+  mutate(thal = case_when(
+    thalassemia == 3 ~ 0,
+    thalassemia > 3 ~ 1
+  ))
+
+data = subset(data_full, select=c('age', 'sex', 'chestpain', 'restingbp', 'choles', 'restingecg', 'angina', 'thal', 'heartdisease', 'heartdisease_binary'))
+```
+
+
+```{r}
+# Set reference levels
+data$sex = relevel(as.factor(data$sex), ref='1') # Ref: male
+data$chestpain = relevel(as.factor(data$chestpain), ref='4') # Ref: asymptomatic
+data$restingecg = relevel(as.factor(data$restingecg), ref='0') # Ref: normal
+data$angina = relevel(as.factor(data$angina), ref='0') # Ref: no
+data$thal = relevel(as.factor(data$thal), ref='0') # Ref: no thalassemia
+data$heartdisease = relevel(as.factor(data$heartdisease), ref='0') # Ref: no heart disease
+data$heartdisease_binary = relevel(as.factor(data$heartdisease_binary), ref='0') # Ref: no heart disease
+```
+
+
+```{r}
+# Thalassemia col has two missing values, we will drop these observations since it is our main exposure
+# skim(data)
+data = data %>% drop_na(thal)
+```
+
+# Descriptive statistics for Binary Logistic Regression
+
+```{r}
+table1::label(data$age) <- "Age (Years)"
+table1::label(data$choles) <- "Serum Cholesterol (mg/dL)"
+table1::label(data$sex) <- "Sex (F/M)"
+table1::label(data$chestpain) <- "Chest Pain (Type)"
+table1::label(data$restingbp) <- "Resting Blood Pressure"
+table1::label(data$restingecg) <- "Resting ECG Results"
+table1::label(data$angina) <- "Exercise-Induced Angina (Y/N)"
+table1::label(data$thal) <- "Thalassemia"
+table1::label(data$heartdisease_binary) <- "Heart Disease"
+
+table1::table1(~ age+choles+sex+chestpain+restingbp+restingecg+angina+heartdisease_binary | thal, data)
+```
+# Descriptive statistics for Ordinal Logistic Regression
+
+```{r}
+table1::label(data$age) <- "Age (Years)"
+table1::label(data$choles) <- "Serum Cholesterol (mg/dL)"
+table1::label(data$sex) <- "Sex (F/M)"
+table1::label(data$chestpain) <- "Chest Pain (Type)"
+table1::label(data$restingbp) <- "Resting Blood Pressure"
+table1::label(data$restingecg) <- "Resting ECG Results"
+table1::label(data$angina) <- "Exercise-Induced Angina (Y/N)"
+table1::label(data$thal) <- "Thalassemia"
+table1::label(data$heartdisease) <- "Heart Disease"
+
+table1::table1(~ age+choles+sex+chestpain+restingbp+restingecg+angina+heartdisease | thal, data)
+```
+
+# Models
+
+## Binary logistic regression 
+
+### Full model
+```{r}
+# Binary outcome
+m1 = glm(heartdisease_binary ~ thal+age+sex+chestpain+choles+angina+restingbp+restingecg, data=data, family='binomial')
+summary(m1)
+```
+
+### Confounding
+
+```{r}
+# Create models to test for confounding
+m1_no_choles = glm(heartdisease_binary ~ thal+age+sex+chestpain+angina+restingbp+restingecg, data=data, family='binomial')
+m1_no_bp = glm(heartdisease_binary ~ thal+age+sex+chestpain+choles+angina+restingecg, data=data, family='binomial')
+```
+
+```{r}
+# Magnitude of confounding for cholesterol
+choles_confound = ((m1$coefficients[2] - m1_no_choles$coefficients[2]) / m1$coefficients[2]) * 100
+choles_confound
+
+# Magnitude of confounding for resting blood pressure
+bp_confound = ((m1$coefficients[2] - m1_no_bp$coefficients[2]) / m1$coefficients[2]) * 100
+bp_confound
+```
+### Reduced model
+
+```{r}
+m2 = glm(heartdisease_binary ~ thal+age+sex+chestpain+angina+restingecg, data=data, family='binomial')
+summary(m2)
+```
+
+```{r}
+final_OR_1 = exp(cbind(coef(m2), confint(m2)))
+final_OR_1
+```
+
+### Unadjusted model
+
+```{r}
+m2_unadjusted = glm(heartdisease_binary ~ thal, data=data, family='binomial')
+summary(m2_unadjusted)
+exp(cbind(coef(m2_unadjusted), confint(m2_unadjusted)))
+```
+
+### Assumptions - Linearity Not met
+
+```{r}
+logodds = m1$linear.predictors
+boxTidwell(logodds ~ data$age)
+```
+## Since the linearity assumption is not satisfied, we are categorizing 'age' to make all the predictor variables categorical
+
+The 50th percentile for our age variable is 56: splitting participants into over 56 and under 56 will give equal proportions in each group. 
+
+```{r}
+skim(data)
+```
+
+```{r}
+data = data %>%
+  mutate(age_group = case_when(
+    age <= 56 ~ 0,
+    age > 56 ~ 1,
+  ))
+data$age_group = relevel(as.factor(data$age_group), ref='0') # Ref: under or equal to 56
+#data$heartdisease_new = relevel(as.factor(data$heartdisease_new), ref='0')
+data
+```
+```{r}
+data$age_group <- cut(data$age, breaks = c(0, 56, Inf), labels = c("Under 56", "Over 56"))
+
+table1::label(data$age_group) <- "Age"
+table1::label(data$choles) <- "Serum Cholesterol (mg/dL)"
+table1::label(data$sex) <- "Sex (F/M)"
+table1::label(data$chestpain) <- "Chest Pain (Type)"
+table1::label(data$restingbp) <- "Resting Blood Pressure"
+table1::label(data$restingecg) <- "Resting ECG Results"
+table1::label(data$angina) <- "Exercise-Induced Angina (Y/N)"
+table1::label(data$thal) <- "Thalassemia"
+table1::label(data$heartdisease_binary) <- "Heart Disease"
+
+table1::table1(~ age_group+choles+sex+chestpain+restingbp+restingecg+angina+heartdisease_binary | thal, data)
+```
+
+###Binary Logistic Regression Analysis after categorization of the variable "Age"
+```{r}
+subgroup_analysis1 = glm(heartdisease_binary ~ thal+age_group+sex+chestpain+angina+restingecg+choles+restingbp, data=data, family='binomial')
+summary(subgroup_analysis1)
+```
+
+```{r}
+# Create models to test for confounding
+m1_no_choles = glm(heartdisease_binary ~ thal+age_group+sex+chestpain+angina+restingbp+restingecg, data=data, family='binomial')
+m1_no_bp = glm(heartdisease_binary ~ thal+age_group+sex+chestpain+choles+angina+restingecg, data=data, family='binomial')
+```
+
+```{r}
+# Magnitude of confounding for cholesterol
+choles_confound = ((subgroup_analysis1$coefficients[2] - m1_no_choles$coefficients[2]) / subgroup_analysis1$coefficients[2]) * 100
+choles_confound
+
+# Magnitude of confounding for resting blood pressure
+bp_confound = ((subgroup_analysis1$coefficients[2] - m1_no_bp$coefficients[2]) / subgroup_analysis1$coefficients[2]) * 100
+bp_confound
+```
+
+```{r}
+subgroup_analysis = glm(heartdisease_binary ~ thal+age_group+sex+chestpain+angina+restingecg, data=data, family='binomial')
+summary(subgroup_analysis)
+```
+
+```{r}
+final_OR = exp(cbind(coef(subgroup_analysis), confint(subgroup_analysis)))
+final_OR
+```
+##Assumptions
+#Multicolinearity
+```{r}
+vif(subgroup_analysis)
+```
+#Influential Outliers
+```{r}
+
+data[cooks.distance(subgroup_analysis)>0.5,]
+plot(subgroup_analysis,pch=18,col='red',which=c(4))
+
+```
+
+###Ordinal logistic Regression Analysis
+
+```{r}
+
+m6 = polr(heartdisease~thal+age_group+sex+chestpain+choles+angina+restingbp+restingecg, data=data)
+summary(m6)
+coeftest(m6)
+```
+#Checking Confouding Variables
+```{r}
+# Create models to test for confounding
+m3_no_choles1 = polr(heartdisease~thal+age+sex+chestpain+angina+restingbp+restingecg, data=data)
+m3_no_bp1 = polr(heartdisease~thal+age+sex+chestpain+choles+angina+restingecg, data=data)
+
+```
+
+```{r}
+# Magnitude of confounding for cholesterol
+choles_confound = ((m71$coefficients[1] - m3_no_choles1$coefficients[1]) / m71$coefficients[1]) * 100
+choles_confound
+
+# Magnitude of confounding for resting blood pressure
+bp_confound = ((m71$coefficients[1] - m3_no_bp1$coefficients[1]) / m71$coefficients[1]) * 100
+bp_confound
+```
+## Reduced model 
+
+```{r}
+m71= polr(heartdisease~thal+age_group+sex+chestpain+angina+restingecg, data=data)
+exp(cbind(coef(m71), confint(m71)))
+coeftest(m71)
+```
+
+```{r}
+final_OR = exp(cbind(coef(m71), confint(m71)))
+final_OR
+```
+##Assumptions
+#Proportional Odds Assumption- Not Met
+
+```{r}
+brant(m71)
+```
+
+##Linear Regression
+```{r}
+m5 = lm(choles ~ thal+age_group+sex+chestpain+angina+restingbp+restingecg+heartdisease_binary, data=data)
+summary(m5)
+confint(m5)
+```
+
+## Trying Ordinal regression model with collapsed categories
+
+### Recategorizing data
+
+```{r}
+data = data %>%
+  mutate(heartdisease_new = case_when(
+    heartdisease == 0 ~ 0,
+    heartdisease == 1 ~ 1,
+    heartdisease == 2 ~ 2,
+    heartdisease == 3 ~ 2,
+    heartdisease == 4 ~ 2
+  ))
+
+data$heartdisease_new = relevel(as.factor(data$heartdisease_new), ref='0')
+data
+```
+```{r}
+
+m61 = polr(heartdisease_new~thal+age_group+sex+chestpain+choles+angina+restingbp+restingecg, data=data)
+summary(m61)
+coeftest(m61)
+```
+
+#Checking Confouding Variables
+```{r}
+# Create models to test for confounding
+m3_no_choles11 = polr(heartdisease_new~thal+age+sex+chestpain+angina+restingbp+restingecg, data=data)
+m3_no_bp11 = polr(heartdisease_new~thal+age+sex+chestpain+choles+angina+restingecg, data=data)
+
+```
+
+```{r}
+# Magnitude of confounding for cholesterol
+choles_confound = ((m61$coefficients[1] - m3_no_choles11$coefficients[1]) / m61$coefficients[1]) * 100
+choles_confound
+
+# Magnitude of confounding for resting blood pressure
+bp_confound = ((m61$coefficients[1] - m3_no_bp11$coefficients[1]) / m61$coefficients[1]) * 100
+bp_confound
+```
+## Reduced model 
+
+```{r}
+m711= polr(heartdisease_new~thal+age_group+sex+chestpain+angina+restingecg, data=data)
+exp(cbind(coef(m711), confint(m711)))
+coeftest(m711)
+```
+##Assumptions
+#Proportional Odds Assumption- Not Met
+
+```{r}
+brant(m711)
+```
