@@ -50,19 +50,43 @@ The focus of our statistical investigation is to understand if there is any stat
   
 4. **Next Steps**:The study suggests future research could focus on individual student-level data to refine predictions.
 
-# 604 Project - Working with Data at Scale
-For our project, we will be examining the relationships between air quality and neighbourhood poverty, and seeing what effect this has on cancer rates and incidents of asthma in New York City. In our research for this project, we discovered that lung cancer is strongly correlated to air pollution, and chose to investigate that along with 3 other types of cancer that we think will also be affected and that we found interesting. The cancers that we will be investigating are: Lung cancer, Larynx cancer, Esophageal cancer, and Non-Hodgkins Lymphoma.
+# 604 Project - Working with Data at Scale - "Health Outcomes Related to Air Quality and Economic Factors in New York City"
+1. **Objective**: The project examines the relationships between air quality and neighbourhood poverty, and see what effect this has on cancer rates and incidents of asthma in New York City. It discovered that lung cancer is strongly correlated to air pollution, and chose to investigate that along with 3 other types of cancer that we think will also be affected and that we found interesting. The cancers that be investigated are Lung cancer, Larynx cancer, Esophageal cancer, and Non-Hodgkins Lymphoma.
 
-For our project, we will be asking 4 guiding questions:
-- By looking at different areas of New York City, can we conclude in general a poor neighbourhood has higher cancer rate and worse air quality?
-- Which pollutants have the highest correlations with which cancers?
-- Does poor air quality increase the prevalence of asthma in adults? Does the borough in NYC affect this? Which pollutants has the greatest effect on asthma incidents?
-- Do the poorest neighbourhoods have the highest incidents of asthma among adults?
+    **4 guiding questions**:
+    - By looking at different areas of New York City, can we conclude in general a poor neighbourhood has a higher cancer rate and worse air quality?
+    - Which pollutants have the highest correlations with which cancers?
+    - Does poor air quality increase the prevalence of asthma in adults? Does the borough in NYC affect this? Which pollutants have the greatest effect on asthma incidents?
+    - Do the poorest neighbourhoods have the highest incidents of asthma among adults?
+  
+2. **Data Source and Methodology**:
+    - The dataset for Asthma incidence rate for the past 12 months for adults from 2003 to 2020. This is an open-source dataset that was taken from the New York City Department of Health Environment and Health Data Portal from the New York City government website.
+    - The dataset for Cancer Incidence for adults is from 2007 - 2011. This is an open-source dataset that was taken from the New York City Department of Health Environment and Health Data Portal from the New York City government website. The four types of cancers that we are focusing on are Lung and Bronchus cancer, Larynx cancer, Esophageal cancer, and Non-Hodgkins Lymphoma.
+    - The dataset for air quality measurement for NYC is from 2011. This is an open-source dataset that was taken from the New York City Department of Health Environment and Health Data Portal from the New York City government website. When combining the tables for this dataset, the pollutants that had matching columns were Nitrogen Dioxide, Nitric Oxide, and PM2.5. Therefore, our study will be focusing on these 3 pollutants.
+    - The dataset for neighbourhood poverty is from 2007 - 2011. This is an open-source dataset that was taken from the New York City Department of Health Environment and Health Data Portal from the New York City government website.
 
-## Dataset
-- The dataset we have chosen for 601 and 602 project is “Historical Air Quality”  which was collected by the Calgary Region Airshed Zone and submitted to Alberta Environment and Parks (AEP). This information is publicly available and can be used from the City of Calgary’s Open Data Portal. City of Calgary’s Open Data Portal Historical Air Quality [online]. Available at: https://data.calgary.ca/Environment/Historical-Air-Quality/uqjm-jxgp/data
+4. **Tools Used**: All datasets were cleaned and loaded to the SQL server. Data were operated via SQL queries. Regression analyst was applied for specific questions.
+
+5. **Results**:
+    - The results of our Pearson's correlation show that there is *no correlation* between poverty level and the presence of Nitrogen Dioxide, Nitric Oxide, or PM2.5 in New York City.
+    - According to Pearson's correlation, we discover that Non-Hodgkins lymphoma is *significantly positively correlated* with Nitrogen Dioxide, Nitric Oxide, and PM2.5.
+    - According to Pearson's correlation, we discover that Larynx cancer is *not correlated* with Nitrogen Dioxide, Nitric Oxide, or PM2.5.
+    - According to Pearson's correlation, we discover that Esophageal cancer is *significantly positively correlated* with PM2.5.
+    - According to Pearson's correlation, we discover that Lung and Bronchus cancer is *not* correlated with Nitrogen Dioxide, Nitric Oxide, or PM2.5.
+    - Notably, the bar graphs shown above indicate that Staten Island has the highest rates of Lung and bronchus cancer cases, but has among the lowest rates of Nitrogen Dioxide, Nitric Oxide, and PM2.5.
+    - Our Pearson's correlation shows that there is no significant correlation between Asthma and Nitrogen Dioxide, Nitric Oxide, or PM2.5.
+    - From the bar graphs, we can see that Manhattan has the highest rates of air pollution across all boroughs of Manhattan, but has the lowest mean rate of asthma incidents, whereas The Bronx has average levels of air pollutants, but the highest rate of asthma incidents.
+    -  From the scatter plot, there is no obvious relationship between the prevalence of Asthma and Nitrogen Dioxide, Nitric Oxide or PM25.
+    -  We use the Pearson correlation coefficient and p-value for testing correlation. As a result, all values we get contain zero thus we could not conclude there is a relationship between the prevalence of asthma and nitrogen dioxide, the prevalence of asthma and nitric oxide or the prevalence of asthma and particulate matter.
+
+- **Next Steps**: For the future, we would like to see if there are machine learning algorithms that can predict the number of cancer cases and asthma incidents based on the levels of air pollution. We would also like to have data that contains different kinds of air pollutants other than the ones we studied so we can have a more accurate depiction of any correlations we might discover. This would be useful in aiding the NYC government to regulate the levels of air pollution in New York City to minimize the impact this has on cancer cases and asthma.
+
+
+
+# Dataset
+- The dataset we have chosen for the 601 and 602 projects is “Historical Air Quality”  which was collected by the Calgary Region Airshed Zone and submitted to Alberta Environment and Parks (AEP). This information is publicly available and can be used from the City of Calgary’s Open Data Portal. City of Calgary’s Open Data Portal Historical Air Quality [online]. Available at: https://data.calgary.ca/Environment/Historical-Air-Quality/uqjm-jxgp/data
 - WHO Air Quality Database. WHO Air Quality Database (Update 2022), Available at: https://www.who.int/data/gho/data/themes/air-pollution/who-air-quality-database
-- The datasets we have chosen for 604 through different databases that were collected and published by the American Community Survey, which are publicly available on the New York City Department of Health Environment and Health Data Portal from the New York City government website.
+- The datasets we have chosen for 604 through different databases were collected and published by the American Community Survey, which are publicly available on the New York City Department of Health Environment and Health Data Portal from the New York City government website.
   - New York City Department of Health, Environment & Health Data Portal."Neighborhood Air Quality" data. Black carbon. Accessed at "https://a816-dohbesp.nyc.gov/IndicatorPublic/beta/data-explorer/air-quality/?id=2024#display=summary" on 10/31/2022.
   - New York City Department of Health, Environment & Health Data Portal."Neighborhood Air Quality" data. Fine particles (PM 2.5). Accessed at "https://a816-dohbesp.nyc.gov/IndicatorPublic/beta/data-explorer/air-quality/?id=2023#display=summary" on 10/31/2022.
   - New York City Department of Health, Environment & Health Data Portal."Neighborhood Air Quality" data. Nitric oxide (NOx). Accessed at "https://a816-dohbesp.nyc.gov/IndicatorPublic/beta/data-explorer/air-quality/?id=2028#display=summary" on 10/31/2022.
