@@ -1,13 +1,30 @@
-# 601 Project - Working with Data and Visualization
-### Guiding Questions
-1. How did the environmental parameters such as greenhouse gasses (Carbon Dioxide, Methane, Nitrogen Dioxide and Nitric Oxide), air quality index, wind speed and temperature change over the course of 39 years?
-2. Is there any correlation between temperature and greenhouse gasses and between wind speed and greenhouse gasses over the 39 years? 
-3. What is the distribution of pollutants throughout Calgary? 
+# 601 Project - Working with Data and Visualization - "Analysis of Calgary’s Historical Air Quality Data"
+The project is a detailed study examining air quality changes over 39 years in Calgary due to anthropogenic factors, particularly greenhouse gas emissions. It leverages data from Alberta Environment and Parks and the World Health Organization to compare local and global trends. Here are the key points for a summary:
+
+1. **Objective and Data Sources**: The project aims to understand the variability in greenhouse gas emissions over nearly four decades in Calgary. It uses two primary datasets: 'Historical Air Quality' from the Calgary Region Airshed Zone and 'Global Data Trends' from the WHO.
+
+    #### Guiding Questions
+    1. How did the environmental parameters such as greenhouse gasses (Carbon Dioxide, Methane, Nitrogen Dioxide and Nitric Oxide), air quality index, wind speed and temperature change over the course of 39 years?
+    2. Is there any correlation between temperature and greenhouse gasses and between wind speed and greenhouse gasses over the 39 years? 
+    3. What is the distribution of pollutants throughout Calgary?
+       
+2. **Methodology and Analysis**: The study employed data wrangling techniques to clean and format large datasets. Statistical analysis was carried out to draw correlations between air pollutants and non-pollutant factors like temperature and wind speed across different locations in Calgary and compared with global trends.
+
+3. **Key Findings**: 
+   - A decline in Nitrogen Dioxide and Nitric Oxide levels was observed, attributed to technological advancements and increased environmental awareness.
+   - Methane and Carbon Dioxide levels showed an upward trend, likely linked to population growth and energy consumption.
+   - The Air Quality Index fluctuated over the years, with notable dips potentially indicating data inconsistencies or specific environmental events.
+
+4. **Conclusions and Recommendations**: The report concludes that while some pollutant levels have decreased, others like Methane and Carbon Dioxide continue to rise, posing environmental concerns. It highlights the importance of individual and collective actions towards eco-friendly practices.
+
+5. **Next Steps**: Future work could focus on examining other greenhouse gas emissions within Alberta to assess the impact of the oil and gas industry more closely and explore the relationship between air quality and proximity to industrial sites.
+
+The project underscores Calgary's progress in air quality management compared to global trends but also emphasizes the need for ongoing efforts to address the rise in certain greenhouse gases.
 
 
 # 602 Project - Statistical Data Analysis
 ### Focus of statistical investigation
-The focus of our statistical investigation is to understand if there is any statistical difference between the particulate matter recorded in Calgary vs particulate matter recorded globally in order to gain evidence to support or reject our hypothesis that PM2.5 globally is equal to PM2.5 in Calgary. We also want to determine how the greenhouse gas emissions changed over the years in Calgary by plotting the distribution of greenhouse gas emissions over the years and estimating the population average via bootstrapping. This data is leveraged by the Government of Alberta to visualize, analyze and continually monitor air pollution. This enables Calgary residents to protect themselves and take the necessary precautions especially those who are health compromised. 
+The focus of our statistical investigation is to understand if there is any statistical difference between the particulate matter recorded in Calgary vs particulate matter recorded globally in order to gain evidence to support or reject our hypothesis that PM2.5 globally is equal to PM2.5 in Calgary. We also want to determine how greenhouse gas emissions changed over the years in Calgary by plotting the distribution of greenhouse gas emissions over the years and estimating the population average via bootstrapping. This data is leveraged by the Government of Alberta to visualize, analyze and continually monitor air pollution. This enables Calgary residents to protect themselves and take the necessary precautions especially those who are health compromised. 
 
 # 603 Project - Statistical Modelling with Data
 In our research for this project, we discovered that many different factors contribute to an individual’s success in terms of their education. The goal of this project is to explore these factors, and analyze how each factor negatively, or positively impacts an individual’s success in the education system in order to be able to make informed decisions on the overall quality of education these students are receiving, as well as predict school achievement success.
