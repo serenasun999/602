@@ -95,7 +95,7 @@ The focus of our statistical investigation is to understand if there is any stat
 The "Chest X-Ray Classification" project involves classifying chest X-ray images using various pre-trained machine learning models. The project aimed to identify the most efficient model for this purpose. Six different models, including VGG16, ResNet50, InceptionV3, MobileNetV3, DenseNet121, and EfficientNetB7, were tested. InceptionV3 emerged as the top performer, combining high accuracy with efficient runtimes. The team employed a transfer learning approach, fine-tuning InceptionV3 by altering its layers and experimenting with various hyperparameters. The report also outlines specific contributions in areas like image preprocessing and model training.
 
 # 623 Project - Big Data in Health
-1. **Utilizing IST Dataset**
+1. **Utilizing International Stroke Trail (IST) Dataset**
     - Objectives: 
         - What are the characteristics of the patient groups (aspirin and high heparin)?
         - The primary purpose of the study is to investigate when patients who have not received any aspirin within 3 days before randomization or heparin within 24 hours before randomization and who have not had any symptoms noted on waking (wake-up stroke), the hazard ratio for death difference in the aspirin group and high-dose heparin group in a stroke trial.
@@ -150,4 +150,5 @@ health issues in the population. To make better mental health interventions, an 
     - CoronaHack -Chest X-Ray-Dataset on Kaggle. https://www.kaggle.com/datasets/praveengovi/coronahack-chest-xraydataset
 - Datasets for 623:
     - Mental Illness during the Pandemic | Public Health Infobase - Public Health Agency of Canada. https://health-infobase.canada.ca/covid-19/mental-health-survey/data-tables.html. Accessed 19 Feb. 2023.
-    - Canada, Public Health Agency of. “Map of Canadian Mental Health during the COVID-19 Pandemic.” Aem, 20 June 2022, https://health-infobase.canada.ca/covid-19/mental-health/. 
+    - Canada, Public Health Agency of. “Map of Canadian Mental Health during the COVID-19 Pandemic.” Aem, 20 June 2022, https://health-infobase.canada.ca/covid-19/mental-health/.
+    - IST dataset: https://datashare.ed.ac.uk/handle/10283/3406
