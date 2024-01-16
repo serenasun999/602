@@ -65,7 +65,7 @@ The focus of our statistical investigation is to understand if there is any stat
     - The dataset for air quality measurement for NYC is from 2011. This is an open-source dataset that was taken from the New York City Department of Health Environment and Health Data Portal from the New York City government website. When combining the tables for this dataset, the pollutants that had matching columns were Nitrogen Dioxide, Nitric Oxide, and PM2.5. Therefore, our study will be focusing on these 3 pollutants.
     - The dataset for neighbourhood poverty is from 2007 - 2011. This is an open-source dataset that was taken from the New York City Department of Health Environment and Health Data Portal from the New York City government website.
 
-4. **Tools Used**: All datasets were cleaned and loaded to the SQL server. Data were operated via SQL queries. Regression analyst was applied for specific questions.
+4. **Tools Used**: All datasets were cleaned and loaded to the SQL server. Data were operated via SQL queries. A regression analyst was applied for specific questions.
 
 5. **Results**:
     - The results of our Pearson's correlation show that there is *no correlation* between poverty level and the presence of Nitrogen Dioxide, Nitric Oxide, or PM2.5 in New York City.
@@ -91,11 +91,35 @@ The focus of our statistical investigation is to understand if there is any stat
 # 622 Project - Machine Learning for Health Data Science - "Chest X-Ray Classification"
 The "Chest X-Ray Classification" project involves classifying chest X-ray images using various pre-trained machine learning models. The project aimed to identify the most efficient model for this purpose. Six different models, including VGG16, ResNet50, InceptionV3, MobileNetV3, DenseNet121, and EfficientNetB7, were tested. InceptionV3 emerged as the top performer, combining high accuracy with efficient runtimes. The team employed a transfer learning approach, fine-tuning InceptionV3 by altering its layers and experimenting with various hyperparameters. The report also outlines specific contributions in areas like image preprocessing and model training.
 
+# 623 Project - Big Data in Health
+1. **Utilizing IST Dataset**
+    - Objectives: 
+        - What are the characteristics of the patient groups (aspirin and high heparin)?
+        - The primary purpose of the study is to investigate when patients who have not received any aspirin within 3 days before randomization or heparin within 24 hours before randomization and who have not had any symptoms noted on waking (wake-up stroke), the hazard ratio for death difference in the aspirin group and high-dose heparin group in a stroke trial.
+        - The secondary purpose of the study is to investigate differences in efficacy (survival rate) among treatments for various stroke subtypes (ischaemic stroke, hemorrhagic stroke and indeterminate stroke) after six months.
+
+2. **Utilizing Canada COVID-19 Dataset**
+    - Objectives:
+        - This study provides a comprehensive picture of mental illness prevalence in Canada by gender and geography in 2020 and 2021 to inform public health and policy efforts to address mental
+health issues in the population. To make better mental health interventions, an overview of mental illness distribution across Canada is necessary.
+    - Methodology:
+        - From Mental Illness during the Pandemic: Survey on COVID-19 and Mental Health (Cycles 1 and 2). Cycle 1 is from September-December 2020, and cycle 2 is from Feb - May 2021
+            - Proportion (%) screening positive for GAD, MDD, and GAD and/or MDD, by age group, by gender, Canada (Cycles 1 and 2)
+            - Proportion (%) reporting daily heavy alcohol drinking and cannabis use, by GAD and/or MDD, Canada (Cycles 1 and 2)
+            - Proportion (%) screening positive for PTSD, by age group, by gender, Canada (Cycles 1 and 2)
+            - Proportion (%) reporting impacts of COVID-19, by PTSD, Canada (Cycles 1 and 2)
+        - From Map of Canadian mental health during the COVID-19 pandemic
+            - Percentage (%) of the population aged 18 years and older who showed moderate to severe symptoms of generalized anxiety disorder, by province/territorial capital, all adults/females/males, 2020 and 2021 SCMH - Survey on COVID-19 and Mental Health
+            - Percentage (%) of the population aged 18 years and older who showed moderate to severe symptoms of major depressive disorder, by province/territorial capital, all adults/females/males, 2020 and 2021 SCMH - Survey on COVID-19 and Mental Health
+            - Percentage (%) of the population aged 18 years and older who showed moderate to severe symptoms of post-traumatic stress disorder (PTSD), by province/territorial capital, all adults/females/males, 2020 and 2021 SCMH - Survey on COVID-19 and Mental Health
+3. **More Details in Report**
+
 
 # Dataset
 - The dataset we have chosen for the 601 and 602 projects is “Historical Air Quality”  which was collected by the Calgary Region Airshed Zone and submitted to Alberta Environment and Parks (AEP). This information is publicly available and can be used from the City of Calgary’s Open Data Portal. City of Calgary’s Open Data Portal Historical Air Quality [online]. Available at: https://data.calgary.ca/Environment/Historical-Air-Quality/uqjm-jxgp/data
 - WHO Air Quality Database. WHO Air Quality Database (Update 2022), Available at: https://www.who.int/data/gho/data/themes/air-pollution/who-air-quality-database
-- The datasets we have chosen for 604 through different databases were collected and published by the American Community Survey, which are publicly available on the New York City Department of Health Environment and Health Data Portal from the New York City government website.
+- The datasets we have chosen for 603 are from The North Carolina Department of Public Instruction. School Report Card Resources for Researchers. Accessed at " https://www.dpi.nc.gov/data-reports/school-report-cards/school-report-card-resources-researchers" on 11/15/2022.
+- The datasets we have chosen for 604 through different databases were collected and published by the American Community Survey, which is publicly available on the New York City Department of Health Environment and Health Data Portal from the New York City government website.
   - New York City Department of Health, Environment & Health Data Portal."Neighborhood Air Quality" data. Black carbon. Accessed at "https://a816-dohbesp.nyc.gov/IndicatorPublic/beta/data-explorer/air-quality/?id=2024#display=summary" on 10/31/2022.
   - New York City Department of Health, Environment & Health Data Portal."Neighborhood Air Quality" data. Fine particles (PM 2.5). Accessed at "https://a816-dohbesp.nyc.gov/IndicatorPublic/beta/data-explorer/air-quality/?id=2023#display=summary" on 10/31/2022.
   - New York City Department of Health, Environment & Health Data Portal."Neighborhood Air Quality" data. Nitric oxide (NOx). Accessed at "https://a816-dohbesp.nyc.gov/IndicatorPublic/beta/data-explorer/air-quality/?id=2028#display=summary" on 10/31/2022.
@@ -109,4 +133,11 @@ The "Chest X-Ray Classification" project involves classifying chest X-ray images
   - New York City Department of Health, Environment & Health Data Portal. "Cancer" data. Non-Hodgkin's lymphomas. Accessed at "https://a816-dohbesp.nyc.gov/IndicatorPublic/beta/data-explorer/cancer/" on 10/31/2022.
   - New York City Department of Health, Environment & Health Data Portal. "Cancer" data. Esophageal cancer. Accessed at "https://a816-dohbesp.nyc.gov/IndicatorPublic/beta/data-explorer/cancer/" on 10/31/2022.
   - New York City Department of Health, Environment & Health Data Portal. "Cancer" data.Larynx cancer. Accessed at "https://a816-dohbesp.nyc.gov/IndicatorPublic/beta/data-explorer/cancer/" on 10/31/2022.
-- The datasets we have chosen for 603 is from The North Carolina Department of Public Instruction. School Report Card Resources for Researchers. Accessed at " https://www.dpi.nc.gov/data-reports/school-report-cards/school-report-card-resources-researchers" on 11/15/2022.
+
+- Datasets for 621:
+    - The dataset used in this study containing information collected at the Cleveland Clinic in 1988 is publicly available from the UCI Machine Learning Repository, Center for Machine Learning and Intelligent Systems (Dua & Graff, 2019).
+- Dataset for 622:
+    - CoronaHack -Chest X-Ray-Dataset on Kaggle. https://www.kaggle.com/datasets/praveengovi/coronahack-chest-xraydataset
+- Datasets for 623:
+    - Mental Illness during the Pandemic | Public Health Infobase - Public Health Agency of Canada. https://health-infobase.canada.ca/covid-19/mental-health-survey/data-tables.html. Accessed 19 Feb. 2023.
+    - Canada, Public Health Agency of. “Map of Canadian Mental Health during the COVID-19 Pandemic.” Aem, 20 June 2022, https://health-infobase.canada.ca/covid-19/mental-health/. 
