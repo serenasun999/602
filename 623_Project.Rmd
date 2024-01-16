@@ -1,0 +1,218 @@
+---
+title: "623_project"
+author: "Boru Sun"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE,warn=-1, message=FALSE)
+pack <- c("knitr", "rmarkdown", "knitcitations", "pander",
+          "readr","e1071","skimr","dplyr","ggplot2","gtsummary","lmtest","WebPower","tidyverse",
+          "brant","gofcat","MASS","ordinal","AER","gtsummary","haven","msme","pscl","themis","survminer",
+          "ggpubr","ggsurvfit","tidycmprsk")
+
+new.packages <- pack[!(pack %in% installed.packages()[,"Package"])]
+if(length(new.packages)) install.packages(new.packages)
+lapply(pack, require, character.only = TRUE)
+```
+
+```{r}
+project_data = read.csv("https://raw.githubusercontent.com/serenasun999/602_601Projects/data/project_data_filtered_corrected.csv")
+baseline_data = read.csv("https://raw.githubusercontent.com/serenasun999/602_601Projects/data/project_data_baseline_corrected.csv")
+project_data
+baseline_data
+```
+```{r}
+#baseline_data$AGE <- as.factor(baseline_data$AGE)
+baseline_data$SEX <- relevel(as.factor(baseline_data$SEX),ref = "F")
+baseline_data$TYPE <- factor(baseline_data$TYPE, levels = c("DDIAGISC","DDIAGHA","DDIAGUN","DNOSTRK"))
+baseline_data$RSLEEP <- relevel(as.factor(baseline_data$RSLEEP), ref="N")
+baseline_data$RHEP24 <- factor(baseline_data$RHEP24, levels=c("N","Y"))
+baseline_data$RASP3 <- factor(baseline_data$RASP3, levels=c("N","Y"))
+baseline_data$FDEAD <- factor(baseline_data$FDEAD, levels=c("N","Y"))
+
+
+#sink("project_baseline.txt")
+table1::table1(~ AGE+SEX+RSLEEP+RHEP24+RASP3+TYPE+FDEAD+TD | Group, data = baseline_data)
+#sink()
+```
+
+```{r}
+survminer::ggsurvplot(survfit(Surv(TD, DIED) ~ Group, 
+                   data = project_data), 
+                   size = 1,
+                   conf.int = T,
+                   pval = TRUE,
+                   legend.labs = 
+                     c("Aspirin", "High Heparin"),
+                   xlab = "Time in days",
+                   break.time.by = 50, 
+                   risk.table = TRUE,
+                   risk.table.col = "strata",
+                   risk.table.fontsize = 3, 
+                   tables.height = 0.25,
+                   tables.theme = theme_bw(),
+                   conf.int.style = "step",
+                   surv.median.line = "hv",
+                   title = "K-M Curve for Treatment Groups")
+```
+```{r}
+logrank.test_over <- survdiff(Surv(TD, DIED) ~ Group, data = project_data)
+logrank.test_over
+```
+
+```{r}
+survminer::ggsurvplot(survfit(Surv(TD, DIED) ~ Group, 
+                   data = project_data), 
+                   size = 1,
+                   conf.int = T,
+                   pval = TRUE,
+                   legend.labs = 
+                     c("Aspirin", "High Heparin"),
+                   xlim = c(0,500),
+                   ylim = c(0.65,1),
+                   xlab = "Time in days",
+                   break.time.by = 50, 
+                   risk.table = FALSE,
+                   risk.table.col = "strata",
+                   risk.table.fontsize = 3, 
+                   tables.height = 0.25,
+                   tables.theme = theme_bw(),
+                   conf.int.style = "step",
+                   surv.median.line = "hv",
+                   title = "K-M Curve for Treatment Groups")
+```
+### Cox Regression Check
+```{r}
+project_data$Group <- relevel(as.factor(project_data$Group), ref = "Aspirin")
+overall_model <- coxph(Surv(TD, DIED) ~ Group, data = project_data)
+summary(overall_model)
+overall_model %>% 
+  tbl_regression(exp = TRUE)
+```
+### Cox Regression Assumption Check and Other
+```{R}
+prop_check <- cox.zph(overall_model)
+prop_check
+```
+### Cox Regression Check with Group and Subtype
+```{r}
+project_data$Group <- relevel(as.factor(project_data$Group), ref = "Aspirin")
+project_data$TYPE <- factor(project_data$TYPE, levels = c("DDIAGISC","DDIAGHA","DDIAGUN"))
+
+TYPE_model <- coxph(Surv(TD, DIED) ~ Group + TYPE, data = project_data)
+summary(TYPE_model)
+TYPE_model %>% 
+  tbl_regression(exp = TRUE)
+```
+### Cox Regression Assumption Check and Other
+```{R}
+prop_check_TYPE <- cox.zph(TYPE_model)
+prop_check_TYPE
+```
+```{r}
+ggcoxzph(prop_check_TYPE)
+```
+```{r}
+survminer::ggsurvplot(survfit(Surv(TD, DIED) ~ TYPE, 
+                   data = project_data), 
+                   size = 1,
+                   conf.int = T,
+                   pval = TRUE,
+                   legend.labs = 
+                     c("DDIAGISC","DDIAGHA","DDIAGUN"),
+                   xlab = "Time in days",
+                   xlim = c(0,500),
+                   break.time.by = 50, 
+                   risk.table = TRUE,
+                   risk.table.col = "strata",
+                   risk.table.fontsize = 3, 
+                   tables.height = 0.3,
+                   tables.theme = theme_bw(),
+                   conf.int.style = "step",
+                   surv.median.line = "hv",
+                   title = "K-M Curve for Subtype of Stroke Groups")
+```
+```{r}
+DDIAGISC <- subset(project_data, TYPE == "DDIAGISC")
+DDIAGHA <- subset(project_data, TYPE == "DDIAGHA")
+DDIAGUN <- subset(project_data, TYPE == "DDIAGUN")
+```
+```{r}
+DDIAGISC_model <- coxph(Surv(TD, DIED) ~ Group, data = DDIAGISC)
+summary(DDIAGISC_model)
+DDIAGHA_model <- coxph(Surv(TD, DIED) ~ Group, data = DDIAGHA)
+summary(DDIAGHA_model)
+DDIAGUN_model <- coxph(Surv(TD, DIED) ~ Group, data = DDIAGUN)
+summary(DDIAGUN_model)
+```
+```{r}
+DDIAGISC_model %>% 
+  tbl_regression(exp = TRUE)
+DDIAGHA_model %>% 
+  tbl_regression(exp = TRUE)
+DDIAGUN_model %>% 
+  tbl_regression(exp = TRUE)
+
+```
+```{r}
+survminer::ggsurvplot(survfit(Surv(TD, DIED) ~ Group, 
+                   data = DDIAGISC), 
+                   size = 1,
+                   conf.int = T,
+                   pval = TRUE,
+                   legend.labs = 
+                     c("Aspirin", "High Heparin"),
+                   xlab = "Time in days",
+                   break.time.by = 50, 
+                   xlim = c(0,500),
+                   risk.table = FALSE,
+                   risk.table.col = "strata",
+                   risk.table.fontsize = 3, 
+                   tables.height = 0.25,
+                   tables.theme = theme_bw(),
+                   conf.int.style = "step",
+                   surv.median.line = "hv",
+                   title = "K-M Curve - Ischaemic Stroke (DDIAGISC)")
+```
+```{r}
+survminer::ggsurvplot(survfit(Surv(TD, DIED) ~ Group, 
+                   data = DDIAGHA), 
+                   size = 1,
+                   conf.int = T,
+                   pval = TRUE,
+                   legend.labs = 
+                     c("Aspirin", "High Heparin"),
+                   xlab = "Time in days",
+                   break.time.by = 50, 
+                   risk.table = FALSE,
+                   xlim = c(0,500),
+                   risk.table.col = "strata",
+                   risk.table.fontsize = 3, 
+                   tables.height = 0.25,
+                   tables.theme = theme_bw(),
+                   conf.int.style = "step",
+                   surv.median.line = "hv",
+                   title = "K-M Curve - Haemorrhagic Stroke (DDIAGHA)")
+```
+```{r}
+survminer::ggsurvplot(survfit(Surv(TD, DIED) ~ Group, 
+                   data = DDIAGUN), 
+                   size = 1,
+                   conf.int = T,
+                   pval = TRUE,
+                   legend.labs = 
+                     c("Aspirin", "High Heparin"),
+                   xlab = "Time in days",
+                   break.time.by = 50, 
+                   xlim = c(0,500),
+                   risk.table = FALSE,
+                   risk.table.col = "strata",
+                   risk.table.fontsize = 3, 
+                   tables.height = 0.25,
+                   tables.theme = theme_bw(),
+                   conf.int.style = "step",
+                   surv.median.line = "hv",
+                   title = "K-M Curve - Indeterminate Stroke (DDIAGUN)")
+```
