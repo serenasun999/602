@@ -114,6 +114,13 @@ health issues in the population. To make better mental health interventions, an 
             - Percentage (%) of the population aged 18 years and older who showed moderate to severe symptoms of post-traumatic stress disorder (PTSD), by province/territorial capital, all adults/females/males, 2020 and 2021 SCMH - Survey on COVID-19 and Mental Health
 3. **More Details in Report**
 
+# 624 Project - Advanced Exploration and Visualization in Health - Visualization and Tableau
+1. **Tools** Python and Tableau
+2. **Libraries** Plotly, Matplotlib, Seaborn, Geopandas
+3. **Tableau Project** - An Analysis of Renal Failure Using MIMIC-IV
+    - The project utilizes the MIMIC-IV dataset, the data files from the hosp folder within the MIMIC-IV, courtesy of PhysioNet (https://physionet.org/content/mimiciv/2.2/). 
+4. **More Details in Report**
+
 
 # Dataset
 - The dataset we have chosen for the 601 and 602 projects is “Historical Air Quality”  which was collected by the Calgary Region Airshed Zone and submitted to Alberta Environment and Parks (AEP). This information is publicly available and can be used from the City of Calgary’s Open Data Portal. City of Calgary’s Open Data Portal Historical Air Quality [online]. Available at: https://data.calgary.ca/Environment/Historical-Air-Quality/uqjm-jxgp/data
